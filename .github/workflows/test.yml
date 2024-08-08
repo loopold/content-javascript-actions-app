@@ -17,12 +17,12 @@ jobs:
     - name: My second step
       if: success()
       run: echo "The previous step has finished successfully"
-    # - name: My third step
-    #   uses: actions/checkout@v1
-    #   with:
-    #       node-version: 12
-    #       registry-url: https://npm.pkg.github.com/ # if your publishing your package to npm or github package repo
-    # # Reference a specific commit
+    - name: My third step
+      uses: actions/checkout@v1
+      with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/ # if your publishing your package to npm or github package repo
+    # Reference a specific commit
     # - uses: actions/setup-node@0e2f9cd
     # # Reference the major version of a release
     # - uses: actions/setup-node@v1
