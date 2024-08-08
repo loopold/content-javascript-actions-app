@@ -1,32 +1,38 @@
-name: test
-
+name: steps
 on:
-  pull_request:
-    branches:
-      - master
-
+  push:
+    branches: [ test ]
 jobs:
-  build:
-
-    name: my job
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-20.04]
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/ 
-        include:
-          - os: ubuntu-20.04
-            node-version: 21.x
-            experimental: true
-
+  run:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install -g mocha
-    - run: npm test
+    - name: My first step
+      env:
+        MY_VAR: Hi there! My name is
+        FIRST_NAME: Chad
+        MIDDLE_NAME: Michael
+        LAST_NAME: Crowell
+      run: |
+        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+    - name: My second step
+      if: success()
+      run: echo "The previous step has finished successfully"
+    # - name: My third step
+    #   uses: actions/checkout@v1
+    #   with:
+    #       node-version: 12
+    #       registry-url: https://npm.pkg.github.com/ # if your publishing your package to npm or github package repo
+    # # Reference a specific commit
+    # - uses: actions/setup-node@0e2f9cd
+    # # Reference the major version of a release
+    # - uses: actions/setup-node@v1
+    # # Reference a minor version of a release
+    # - uses: actions/setup-node@v1.2
+    # # Reference a branch
+    # - uses: actions/setup-node@master
+    # - name: my fifth step
+    #   uses: actions/first-interaction@v1
+    #   with:
+    #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+    #     issue-message: 'Message that will be displayed on users'' first issue'
+    #     pr-message: 'Message that will be displayed on users'' first pr'
